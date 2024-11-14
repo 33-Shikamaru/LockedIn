@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+    font-family: 'Lazydog';
+    src: url(/fonts/Lazydog-kids.ttf);
+    font-style: normal;
+}
+
+body {
+    font-family: 'Lazydog';
+    font-size: 18px;
+    background-color: #FBFDFF;
+}

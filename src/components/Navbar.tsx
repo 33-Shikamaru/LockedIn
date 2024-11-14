@@ -1,6 +1,6 @@
 export default function Navbar() {
     return(
-        <ul className="flex items-center justify-center">
+        <ul className="flex items-center justify-center p-5 text-[#8EC2FF]">
             <li className="px-6">
                 <a href="">Dashboard</a>
             </li>
