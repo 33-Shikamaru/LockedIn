@@ -7,6 +7,7 @@ import Navbar from './components/Navbar.tsx'
 import Title from './components/Title.tsx'
 import DashNote from './components/DashNote.tsx'
 import MiniCalendar from './components/Calendar.tsx'
+import ToDoList from './components/ToDoList.tsx'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <DashNote username="Jefferson McLinden"/> 
       <MiniCalendar />
       <ToDo />
+      <ToDoList />
     </>
   )
 }
