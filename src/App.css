@@ -13,19 +13,16 @@ body {
     background-color: #FBFDFF;
 }
 
-MiniCalendar {
-    border: 2px solid white;
-}
+
 /* Editing a bit of the Calendar */
 .react-calendar__navigation__label__labelText,
 .react-calendar__year-view
 {
     font-family: 'Lazydog';
-    text-decoration: dotted;
 }
 
 .react-calendar__month-view {
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .react-calendar__navigation__prev2-button,

@@ -7,7 +7,7 @@ type NameProp = {
 
 // }
 
-export default function Dashnote({ username } :NameProp) {
+export default function DashNote({ username } :NameProp) {
     return(
         <div className="flex items-center justify-center">
         <div className="flex space-x-2 w-1/2 bg-blue-100 rounded-lg px-5 py-5" aria-label="dashboard note">

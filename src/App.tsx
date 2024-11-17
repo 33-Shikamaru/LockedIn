@@ -5,7 +5,7 @@ import './App.css'
 import ToDo from './components/ToDo.tsx'
 import Navbar from './components/Navbar.tsx'
 import Title from './components/Title.tsx'
-import Dashnote from './components/Dashnote.tsx'
+import DashNote from './components/DashNote.tsx'
 import MiniCalendar from './components/Calendar.tsx'
 
 function App() {
@@ -13,8 +13,8 @@ function App() {
     <> 
       <Title />
       <Navbar />
-      {/* After we get user info we pass it here or in the Dashnote.tsx file */}
-      <Dashnote username="Jefferson McLinden"/> 
+      {/* After we get user info we pass it here or in the DashNote.tsx file */}
+      <DashNote username="Jefferson McLinden"/> 
       <MiniCalendar />
       <ToDo />
     </>
