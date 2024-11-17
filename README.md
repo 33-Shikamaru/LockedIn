@@ -12,3 +12,8 @@ University of California, Irvine - Fall 2024 - Professor Jagannath
 # Features
 
 // None lol
+
+# Instructions
+1. Clone the repository
+2. Install the project's dependencies with the command `npm install`
+3. To run the application, enter the command `npm start`
