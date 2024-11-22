@@ -114,7 +114,11 @@ const StyledTabs: React.FC = () => {
                         borderRadius: 2,
                         mb: 1,
                         boxShadow: 1,
-                        
+                        display: 'flex',
+                        alignItems: 'center',
+                        width: '100%',
+                        maxWidth: '100%',
+                        wordWrap: 'break-word',
                     }}
                 >
                     <Checkbox
