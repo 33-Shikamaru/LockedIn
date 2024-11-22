@@ -9,6 +9,7 @@ import {
     ListItem,
     ListItemText,
     Paper,
+    Checkbox,
     // Button,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -19,6 +20,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 interface Task {
     id: number;
     text: string;
+    completed: boolean;
 }
 
 const StyledTabs: React.FC = () => {
@@ -63,7 +65,7 @@ const StyledTabs: React.FC = () => {
     const handleAddTask = () => {
         if (!newTask.trim()) return;
         const currentTab = tabs[activeTab];
-        const task: Task = { id: Date.now(), text: newTask };
+        const task: Task = { id: Date.now(), text: newTask , completed: false,};
         setTasks((prevTasks) => ({
             ...prevTasks,
             [currentTab]: [...(prevTasks[currentTab] || []), task],
@@ -92,6 +94,14 @@ const StyledTabs: React.FC = () => {
         }));
     };
     
+    const handleCheckboxChange = (tab: any, id: number) => {
+        setTasks((prevTasks) => ({
+            ...prevTasks,
+            [tab]: prevTasks[tab].map((task) =>
+                task.id === id ? { ...task, completed: !task.completed } : task
+            ),
+        }));
+    }
 
     const renderTasks = (tab: string) => (
         <List>
@@ -99,17 +109,27 @@ const StyledTabs: React.FC = () => {
                 <ListItem
                     key={task.id}
                     sx={{
-                        backgroundColor: '#f9f9f9',
+                        // backgroundColor: '#f9f9f9',
+                        backgroundColor: task.completed ? '#ebffef' : '#f9f9f9',
                         borderRadius: 2,
                         mb: 1,
                         boxShadow: 1,
+                        
                     }}
                 >
+                    <Checkbox
+                        checked={task.completed}
+                        onChange={() => handleCheckboxChange(tab, task.id)}
+                    />
                     <ListItemText
                         primary={task.text}
                         primaryTypographyProps={{
                             fontSize: '1rem',
                             fontWeight: 500,
+                            sx:{
+                                color: task.completed ? 'lightgray' : 'inherit',
+                                textDecoration: task.completed ? 'line-through' : 'none',
+                            }
                         }}
                     />
                     <IconButton
@@ -159,7 +179,7 @@ const StyledTabs: React.FC = () => {
                             slotProps={{
                                 input: { 
                                     style: {
-                                    fontFamily: "'Lazydog', sans-serif",
+                                        fontFamily: "'Lazydog', sans-serif",
                                     },
                                 }
                             }}
