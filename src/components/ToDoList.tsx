@@ -31,7 +31,7 @@ const StyledTabs: React.FC = () => {
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
     const [newTabName, setNewTabName] = useState('');
 
-    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
         setActiveTab(newValue);
     };
 
@@ -138,10 +138,12 @@ const StyledTabs: React.FC = () => {
                                     ml: 1,
                                 },
                             }}
-                            InputProps={{
-                                style: {
+                            slotProps={{
+                                input: { 
+                                    style: {
                                     fontFamily: "'Lazydog', sans-serif",
-                                },
+                                    },
+                                }
                             }}
                         />
                     </Box>
