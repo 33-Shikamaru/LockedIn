@@ -9,9 +9,11 @@ import {
     ListItem,
     ListItemText,
     Paper,
+    // Button,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 interface Task {
@@ -58,7 +60,7 @@ const StyledTabs: React.FC = () => {
         setNewTabName(tabs[index]);
     };
 
-    const addTask = () => {
+    const handleAddTask = () => {
         if (!newTask.trim()) return;
         const currentTab = tabs[activeTab];
         const task: Task = { id: Date.now(), text: newTask };
@@ -69,7 +71,7 @@ const StyledTabs: React.FC = () => {
         setNewTask('');
     };
 
-    const addTab = () => {
+    const handleAddTab = () => {
         const newTabName = `Tab ${tabs.length + 1}`;
         setTabs((prevTabs) => [...prevTabs, newTabName]);
         setTasks((prevTasks) => ({ ...prevTasks, [newTabName]: [] }));
@@ -82,6 +84,14 @@ const StyledTabs: React.FC = () => {
             setActiveTab((prevTab) => (prevTab > 0 ? prevTab - 1 : 0));
         }
     };
+
+    const handleDeleteTask = (tab: any , id: number) => {
+        setTasks((prevTasks) => ({
+            ...prevTasks,
+            [tab]: prevTasks[tab].filter((task) => task.id !== id),
+        }));
+    };
+    
 
     const renderTasks = (tab: string) => (
         <List>
@@ -102,6 +112,14 @@ const StyledTabs: React.FC = () => {
                             fontWeight: 500,
                         }}
                     />
+                    <IconButton
+                        onClick={() => handleDeleteTask(tab, task.id)}
+                        sx={{
+                            '&:hover': { color: 'white', bgcolor: '#FF7E7E', borderRadius: '0.5rem', },
+                        }}
+                    >
+                       <DeleteIcon></DeleteIcon>
+                    </IconButton>
                 </ListItem>
             ))}
         </List>
@@ -246,7 +264,7 @@ const StyledTabs: React.FC = () => {
                                         padding: 0,
                                     }}
                                 />}
-                            onClick={addTab}
+                            onClick={handleAddTab}
                             sx={{
                                 minWidth: '20px',
                                 padding: 0,
@@ -277,7 +295,7 @@ const StyledTabs: React.FC = () => {
                             }}
                         >
                             <IconButton
-                                onClick={addTask}
+                                onClick={handleAddTask}
                                 color="primary"
                                 size="small"
                                 sx={{
@@ -297,7 +315,7 @@ const StyledTabs: React.FC = () => {
                                 onChange={(e) => setNewTask(e.target.value)}
                                 onKeyDown={(e) => {
                                     if (e.key === 'Enter' && newTask.trim() !== '') {
-                                        addTask()
+                                        handleAddTask()
                                     }
                                 }}
                                 onBlur={handleBlur}
