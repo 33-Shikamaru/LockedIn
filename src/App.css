@@ -6,6 +6,11 @@
     src: url(/fonts/Lazydog-kids.ttf);
     font-style: normal;
 }
+@font-face {
+    font-family: 'DigitalClockFont';
+    src: url(/fonts/DigitalClockFont.ttf);
+    font-style: normal;
+}
 
 body {
     font-family: 'Lazydog';

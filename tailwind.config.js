@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        digital: ['DigitalClockFont', 'monospace'], // Added Custom Font for Clock named 'digital'
+      },
+    },
   },
   plugins: [],
 }
