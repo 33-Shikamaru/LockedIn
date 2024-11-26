@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Tabs,
     Tab,
@@ -10,6 +10,7 @@ import {
     ListItemText,
     Paper,
     Checkbox,
+    Typography,
     // Button,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -26,14 +27,29 @@ interface Task {
 const StyledTabs: React.FC = () => {
     const [tabs, setTabs] = useState<string[]>(['General', 'Work', 'Personal']);
     const [activeTab, setActiveTab] = useState(0);
-    const [tasks, setTasks] = useState<Record<string, Task[]>>({
-        General: [],
-        Work: [],
-        Personal: [],
+    const [tasks, setTasks] = useState<Record<string, Task[]>>(() => {
+        const savedTasks = localStorage.getItem('tasks');
+        if (savedTasks) {
+            return JSON.parse(savedTasks);
+        }
+        return {
+            General: [],
+            Work: [],
+            Personal: [],
+        };
     });
     const [newTask, setNewTask] = useState('');
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
     const [newTabName, setNewTabName] = useState('');
+
+    
+    //===== FOR TESTING TASKS IN localStorage =====
+    // Gets called every time tasks change
+    useEffect(() => {
+        // console.log('Tasks changed, saving to localStorage:', tasks); // Log to see current tasks
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }, [tasks]);
+    
 
     const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
         setActiveTab(newValue);
@@ -78,6 +94,9 @@ const StyledTabs: React.FC = () => {
         setTabs((prevTabs) => [...prevTabs, newTabName]);
         setTasks((prevTasks) => ({ ...prevTasks, [newTabName]: [] }));
         setActiveTab(tabs.length);
+        useEffect(() => {
+            localStorage.setItem('tabs', JSON.stringify(tabs))
+        },[setTabs]);
     };
 
     const handleTabClose = (index: number) => {
@@ -361,7 +380,23 @@ const StyledTabs: React.FC = () => {
                                 borderRadius: 1.5,
                                 boxShadow: 1,
                             }}
-                        >
+                        > 
+                        {/* TESTING BELOW ONLY */}
+{/*                         
+                            {(tabs[activeTab] && tabs[activeTab].length === 0) ? (
+                                <Box
+                                    display="flex"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    // p={2}
+                                    color='red'
+                                >
+                                     No Tasks To Complete
+                                </Box>
+                            ) : (
+                                renderTasks(tabs[activeTab])
+                            )} */}
+                            
                             {renderTasks(tabs[activeTab])}
                         </Paper>
                     </Box>
