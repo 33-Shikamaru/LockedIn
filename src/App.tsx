@@ -6,6 +6,7 @@ import DashNote from './components/Dashnote.tsx'
 import MiniCalendar from './components/Calendar.tsx'
 import ToDoList from './components/ToDoList.tsx'
 import WeatherWidget from './components/weather/index.tsx'
+import Login from './components/Login.tsx'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <> 
+      <Login />
       <Title />
       <Navbar />
       {/* After we get user info we pass it here or in the DashNote.tsx file */}
