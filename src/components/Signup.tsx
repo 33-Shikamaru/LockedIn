@@ -3,6 +3,11 @@ import { useNavigate } from 'react-router-dom'
 const Signup = () => {
   const navigate = useNavigate();
 
+  const handleSignIn = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate('/home'); 
+  };
+
   const redirectToLogin = () => {
     navigate('/');
   };
@@ -26,7 +31,8 @@ const Signup = () => {
               className="p-2 rounded-lg placeholder-gray-300 outline-none mb-4"/>
   
               <button type="submit" 
-              className="bg-blue-300 py-2 rounded-lg text-xl hover:bg-blue-400 mb-2">Sign Up</button>
+              className="bg-blue-300 py-2 rounded-lg text-xl hover:bg-blue-400 mb-2"
+              onClick={handleSignIn}>Sign Up</button>
   
               <button type="button"
               className="text-blue-600 hover:text-blue-800"
