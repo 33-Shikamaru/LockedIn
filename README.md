@@ -9,11 +9,14 @@ University of California, Irvine - Fall 2024 - Professor Jagannath
 
 # Features
 
+- Login / Signup (user authentication in progress)
 - Clock
 - Calendar
-- Weather Widget
+- Dynamic Weather Widget
 - To Do List
 - Notes (in progress)
+
+<img width="770" alt="image" src="https://github.com/user-attachments/assets/0d62a1b8-c705-4276-892d-2c359fea348d">
 
 
 # Instructions
