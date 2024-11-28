@@ -9,11 +9,11 @@ University of California, Irvine - Fall 2024 - Professor Jagannath
 
 # Features
 
-Clock
-Calendar
-Weather Widget
-To Do List
-Notes (in progress)
+- Clock
+- Calendar
+- Weather Widget
+- To Do List
+- Notes (in progress)
 
 
 # Instructions
