@@ -69,7 +69,7 @@ const WeatherWidget = ({ location }: { location: string }) => {
         className={`flex flex-col justify-center items-center rounded-md 
           ${isDayTime ? "bg-gradient-to-br from-blue-50 via-blue-300 to-blue-600" : 
           "bg-gradient-to-br from-blue-500 to-indigo-900"}
-          font-digital text-sm text-white p-5`}
+           text-sm text-white p-5`} // removed font-digital
       >
         {isDayTime ? 
         <SunSvg 

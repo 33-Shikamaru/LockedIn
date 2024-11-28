@@ -10,8 +10,6 @@ import {
     ListItemText,
     Paper,
     Checkbox,
-    Typography,
-    // Button,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -24,9 +22,21 @@ interface Task {
     completed: boolean;
 }
 
-const StyledTabs: React.FC = () => {
-    const [tabs, setTabs] = useState<string[]>(['General', 'Work', 'Personal']);
-    const [activeTab, setActiveTab] = useState(0);
+const StyledTabs = () => {
+    const [tabs, setTabs] = useState<string[]>(() => {
+        const savedTabs = localStorage.getItem('tabs');
+        if (savedTabs) {
+            return JSON.parse(savedTabs);
+        }
+        return {
+            General: [],
+            Work: [],
+            Personal: [],
+        }
+    });
+
+    const [activeTab, setActiveTab] = useState(0); // Sets Default Active Tab State
+
     const [tasks, setTasks] = useState<Record<string, Task[]>>(() => {
         const savedTasks = localStorage.getItem('tasks');
         if (savedTasks) {
@@ -38,38 +48,41 @@ const StyledTabs: React.FC = () => {
             Personal: [],
         };
     });
-    const [newTask, setNewTask] = useState('');
-    const [editingIndex, setEditingIndex] = useState<number | null>(null);
-    const [newTabName, setNewTabName] = useState('');
+    const [newTask, setNewTask] = useState(''); // Sets Default Task Name
+    const [editingIndex, setEditingIndex] = useState<number | null>(null); // Sets Default Tab Index
+    const [newTabName, setNewTabName] = useState(''); // Sets Default Tab Name
 
     
-    //===== FOR TESTING TASKS IN localStorage =====
-    // Gets called every time tasks change
+    // Updates localStorage for tasks on any change
     useEffect(() => {
-        // console.log('Tasks changed, saving to localStorage:', tasks); // Log to see current tasks
+        // console.log('Tasks changed, saving to localStorage:', tasks); // Logging test to print current tasks
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }, [tasks]);
     
+    // Updates localStorage for tabs on any change
+    useEffect(() => {
+        localStorage.setItem('tabs', JSON.stringify(tabs));
+    }, [tabs]);
 
     const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
         setActiveTab(newValue);
     };
 
-    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const changeTabName = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNewTabName(event.target.value);
     };
 
-    const handleBlur = () => {
+    const saveTabName = () => {
         if (editingIndex === null) return;
-        const updatedTabs = [...tabs];
-        updatedTabs[editingIndex] = newTabName;
-        setTabs(updatedTabs);
+        const updatedTabs = [...tabs]; // Copy current tabs to updatedTabs
+        updatedTabs[editingIndex] = newTabName; // Adds new tab name to current editing tab (AKA active tab) 
+        setTabs(updatedTabs); // Update tabs
         setEditingIndex(null);
     };
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
-            handleBlur();
+            saveTabName();
         }
     };
 
@@ -78,46 +91,46 @@ const StyledTabs: React.FC = () => {
         setNewTabName(tabs[index]);
     };
 
-    const handleAddTask = () => {
+    const addNewTask = () => {
         if (!newTask.trim()) return;
         const currentTab = tabs[activeTab];
         const task: Task = { id: Date.now(), text: newTask , completed: false,};
         setTasks((prevTasks) => ({
-            ...prevTasks,
-            [currentTab]: [...(prevTasks[currentTab] || []), task],
+            ...prevTasks, // Copy all tasks 
+            [currentTab]: [...(prevTasks[currentTab] || []), task], // Add prevTasks to currentTab (either task list or empty list) and after, append the new task to it
         }));
-        setNewTask('');
+        setNewTask(''); // Resets input field to be empty
     };
 
-    const handleAddTab = () => {
-        const newTabName = `Tab ${tabs.length + 1}`;
-        setTabs((prevTabs) => [...prevTabs, newTabName]);
-        setTasks((prevTasks) => ({ ...prevTasks, [newTabName]: [] }));
-        setActiveTab(tabs.length);
-        useEffect(() => {
-            localStorage.setItem('tabs', JSON.stringify(tabs))
-        },[setTabs]);
+    const addNewTab = () => {
+        const newTabName = `Tab ${tabs.length + 1}`; // Default tab name
+        setTabs((prevTabs) => [...prevTabs, newTabName]); // Copy all tabs and append the newTabName to this new list
+        setTasks((prevTasks) => ({ ...prevTasks, [newTabName]: [] })); // Copy all tasks and set the new tab to have an empty task list
+        setActiveTab(tabs.length); // Make newly created tab the active one
     };
 
-    const handleTabClose = (index: number) => {
-        setTabs(tabs.filter((_, tabIndex) => tabIndex !== index));
+    const closeTab = (index: number) => {
+        const updatedTabs = tabs.filter((_, tabIndex) => tabIndex !== index); // Create updatedTabs to be a list of tabs skipping the one being closed
+        setTabs(updatedTabs); // Update the tabs without the closed tab
+        localStorage.setItem('tabs', JSON.stringify(updatedTabs)); // Update localStorage
+
         if (activeTab === index) {
-            setActiveTab((prevTab) => (prevTab > 0 ? prevTab - 1 : 0));
+            setActiveTab((prevTab) => (prevTab > 0 ? prevTab - 1 : 0)); // Make previous tab the active one
         }
     };
 
-    const handleDeleteTask = (tab: any , id: number) => {
+    const deleteTask = (tab: any , id: number) => {
         setTasks((prevTasks) => ({
-            ...prevTasks,
-            [tab]: prevTasks[tab].filter((task) => task.id !== id),
+            ...prevTasks, // copy all tasks
+            [tab]: prevTasks[tab].filter((task) => task.id !== id), // only the active tab will be updated to have all tasks added except the one that originally called this function (by skipping, we remove the task)
         }));
     };
     
-    const handleCheckboxChange = (tab: any, id: number) => {
+    const updateCheckbox = (tab: any, id: number) => {
         setTasks((prevTasks) => ({
-            ...prevTasks,
-            [tab]: prevTasks[tab].map((task) =>
-                task.id === id ? { ...task, completed: !task.completed } : task
+            ...prevTasks, // Copy all tasks 
+            [tab]: prevTasks[tab].map((task) => // only the active tab will be updated and we will check all tasks we have for matching id's
+                task.id === id ? { ...task, completed: !task.completed } : task // if we find a task with the id that we are checking off, copy over all task attributes and invert only the completed property
             ),
         }));
     }
@@ -142,7 +155,7 @@ const StyledTabs: React.FC = () => {
                 >
                     <Checkbox
                         checked={task.completed}
-                        onChange={() => handleCheckboxChange(tab, task.id)}
+                        onChange={() => updateCheckbox(tab, task.id)}
                     />
                     <ListItemText
                         primary={task.text}
@@ -156,7 +169,7 @@ const StyledTabs: React.FC = () => {
                         }}
                     />
                     <IconButton
-                        onClick={() => handleDeleteTask(tab, task.id)}
+                        onClick={() => deleteTask(tab, task.id)}
                         sx={{
                             '&:hover': { color: 'white', bgcolor: '#FF7E7E', borderRadius: '0.5rem', },
                         }}
@@ -250,8 +263,10 @@ const StyledTabs: React.FC = () => {
                                     editingIndex === index ? (
                                         <TextField
                                             value={newTabName}
-                                            onChange={handleNameChange}
-                                            onBlur={handleBlur}
+                                            onChange={changeTabName
+                                        
+                                            }
+                                            onBlur={saveTabName}
                                             onKeyDown={handleKeyDown}
                                             autoFocus
                                             size="small"
@@ -279,7 +294,7 @@ const StyledTabs: React.FC = () => {
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                             <span onDoubleClick={() => setEditingIndex(index)}>{tab}</span>
                                             <IconButton
-                                                onClick={() => handleTabClose(index)}
+                                                onClick={() => closeTab(index)}
                                                 sx={{
                                                     ml: 2,
                                                     mr: -1,
@@ -307,7 +322,7 @@ const StyledTabs: React.FC = () => {
                                         padding: 0,
                                     }}
                                 />}
-                            onClick={handleAddTab}
+                            onClick={addNewTab}
                             sx={{
                                 minWidth: '20px',
                                 padding: 0,
@@ -338,7 +353,7 @@ const StyledTabs: React.FC = () => {
                             }}
                         >
                             <IconButton
-                                onClick={handleAddTask}
+                                onClick={addNewTask}
                                 color="primary"
                                 size="small"
                                 sx={{
@@ -358,10 +373,10 @@ const StyledTabs: React.FC = () => {
                                 onChange={(e) => setNewTask(e.target.value)}
                                 onKeyDown={(e) => {
                                     if (e.key === 'Enter' && newTask.trim() !== '') {
-                                        handleAddTask()
+                                        addNewTask()
                                     }
                                 }}
-                                onBlur={handleBlur}
+                                onBlur={saveTabName}
                                 sx={{
                                     flexGrow: 1,
                                     bgcolor: 'white',
@@ -382,7 +397,7 @@ const StyledTabs: React.FC = () => {
                             }}
                         > 
                         {/* TESTING BELOW ONLY */}
-{/*                         
+                        {/*                         
                             {(tabs[activeTab] && tabs[activeTab].length === 0) ? (
                                 <Box
                                     display="flex"
@@ -395,7 +410,8 @@ const StyledTabs: React.FC = () => {
                                 </Box>
                             ) : (
                                 renderTasks(tabs[activeTab])
-                            )} */}
+                            )} 
+                        */}
                             
                             {renderTasks(tabs[activeTab])}
                         </Paper>
