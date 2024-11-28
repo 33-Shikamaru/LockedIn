@@ -7,11 +7,14 @@ University of California, Irvine - Fall 2024 - Professor Jagannath
 # Project Description
 > Note: This project covers Assignments 3 - 5.
 
-// Insert remainder text here
-
 # Features
 
-// None lol
+Clock
+Calendar
+Weather Widget
+To Do List
+Notes (in progress)
+
 
 # Instructions
 1. Clone the repository
