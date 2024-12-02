@@ -14,7 +14,7 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import SearchBar from './SearchBar';
 
 interface Task {
     id: number;
@@ -22,7 +22,7 @@ interface Task {
     completed: boolean;
 }
 
-const StyledTabs = () => {
+const ToDoList = () => {
     const [tabs, setTabs] = useState<string[]>(() => {
         const savedTabs = localStorage.getItem('tabs');
         if (savedTabs) {
@@ -95,18 +95,32 @@ const StyledTabs = () => {
         if (!newTask.trim()) return;
         const currentTab = tabs[activeTab];
         const task: Task = { id: Date.now(), text: newTask , completed: false,};
-        setTasks((prevTasks) => ({
+        setTasks((prevTasks) => {
+            const updatedTasks = {
             ...prevTasks, // Copy all tasks 
             [currentTab]: [...(prevTasks[currentTab] || []), task], // Add prevTasks to currentTab (either task list or empty list) and after, append the new task to it
-        }));
+            };
+
+            // Updates localStorage to include task in list immediately
+            localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+            return updatedTasks;
+        });
         setNewTask(''); // Resets input field to be empty
     };
 
     const addNewTab = () => {
         const newTabName = `Tab ${tabs.length + 1}`; // Default tab name
-        setTabs((prevTabs) => [...prevTabs, newTabName]); // Copy all tabs and append the newTabName to this new list
-        setTasks((prevTasks) => ({ ...prevTasks, [newTabName]: [] })); // Copy all tasks and set the new tab to have an empty task list
-        setActiveTab(tabs.length); // Make newly created tab the active one
+        setTabs((prevTabs) => { 
+            const updatedTabs = [...prevTabs, newTabName]; // Copy all tabs and append the newTabName to this new list
+            localStorage.setItem('tabs', JSON.stringify(updatedTabs));
+            return updatedTabs;
+        });
+        setTasks((prevTasks) => {
+            const updatedTasks = { ...prevTasks, [newTabName]: [] }; // Copy all tasks and set the new tab to have an empty task list
+            localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+            return updatedTasks   
+        });
+            setActiveTab(tabs.length); // Make newly created tab the active one
     };
 
     const closeTab = (index: number) => {
@@ -114,16 +128,28 @@ const StyledTabs = () => {
         setTabs(updatedTabs); // Update the tabs without the closed tab
         localStorage.setItem('tabs', JSON.stringify(updatedTabs)); // Update localStorage
 
+        const updatedTasks = { ...tasks };
+        delete updatedTasks[tabs[index]]; // When closing a tab, the tasks living in this tab are deleted
+        setTasks(updatedTasks); // Update localStorage
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+
         if (activeTab === index) {
             setActiveTab((prevTab) => (prevTab > 0 ? prevTab - 1 : 0)); // Make previous tab the active one
         }
+
     };
 
     const deleteTask = (tab: any , id: number) => {
-        setTasks((prevTasks) => ({
-            ...prevTasks, // copy all tasks
-            [tab]: prevTasks[tab].filter((task) => task.id !== id), // only the active tab will be updated to have all tasks added except the one that originally called this function (by skipping, we remove the task)
-        }));
+        setTasks((prevTasks) => {
+            const updatedTasks = {
+                ...prevTasks, // copy all tasks
+                [tab]: prevTasks[tab].filter((task) => task.id !== id), // only the active tab will be updated to have all tasks added except the one that originally called this function (by skipping, we remove the task)
+            }
+
+            // Updates localStorage to remove task immediately
+            localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+            return updatedTasks;
+        });
     };
     
     const updateCheckbox = (tab: any, id: number) => {
@@ -185,42 +211,9 @@ const StyledTabs = () => {
         <div className="flex items-center justify-center">
             <div className="flex space-x-2 w-1/2 bg-blue-100 rounded-lg px-5 py-5" aria-label="To Do List">
                 <Box sx={{ width: '100%', typography: 'body1', p: 2 }}>
+
                     {/* Search Bar */}
-                    <Box sx={{ mb: 2 }}>
-                        <TextField
-                            fullWidth
-                            placeholder="Search for a Task"
-                            sx={{
-                                bgcolor: 'white',
-                                borderRadius: 10,
-                                outline: 'none',
-                                boxShadow: 1,
-                                maxHeight: 60,
-                                '& .MuiOutlinedInput-root': {
-                                    '& fieldset': {
-                                        border: 'none',
-                                    },
-                                    '&:hover fieldset': {
-                                        border: 'none',
-                                    },
-                                    '&.Mui-focused fieldset': {
-                                        border: 'none',
-                                    },
-                                },
-                                '& .MuiInputBase-input': {
-                                    padding: 1.25,
-                                    ml: 1,
-                                },
-                            }}
-                            slotProps={{
-                                input: { 
-                                    style: {
-                                        fontFamily: "'Lazydog', sans-serif",
-                                    },
-                                }
-                            }}
-                        />
-                    </Box>
+                    <SearchBar />
 
                     {/* Tabs */}
                     <Tabs
@@ -422,4 +415,4 @@ const StyledTabs = () => {
     );
 };
 
-export default StyledTabs;
+export default ToDoList;
