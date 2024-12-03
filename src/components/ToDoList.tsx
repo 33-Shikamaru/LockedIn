@@ -213,7 +213,7 @@ const ToDoList = () => {
                 <Box sx={{ width: '100%', typography: 'body1', p: 2 }}>
 
                     {/* Search Bar */}
-                    <SearchBar />
+                    <SearchBar setActiveTab={setActiveTab}/>
 
                     {/* Tabs */}
                     <Tabs
@@ -256,9 +256,7 @@ const ToDoList = () => {
                                     editingIndex === index ? (
                                         <TextField
                                             value={newTabName}
-                                            onChange={changeTabName
-                                        
-                                            }
+                                            onChange={changeTabName}
                                             onBlur={saveTabName}
                                             onKeyDown={handleKeyDown}
                                             autoFocus
