@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Navbar from './Navbar.tsx'
 import Title from './Title.tsx'
 import DashNote from './Dashnote.tsx'
-import MiniCalendar from './Calendar.tsx'
+import Calendar from './Calendar.tsx'
 import ToDoList from './ToDoList.tsx'
 import WeatherWidget from './weather/index.tsx'
 
@@ -23,7 +23,7 @@ const Home = () => {
       <DashNote username="Jefferson McLinden"/> 
 
       <div className="flex items-center justify-center m-10">
-        <MiniCalendar/>
+        <Calendar/>
           <div className="flex flex-col items-center" aria-label="select-location">
             <form 
             className="flex flex-col items-center"
