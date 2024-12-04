@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 export default function DigitalClock() {
-    const [time, setTime] = useState(new Date());
+    const [time, setTime] = useState(new Date()); 
 
     useEffect(() => {
         const currInterval = setInterval(() => {
@@ -22,7 +22,16 @@ export default function DigitalClock() {
         const cycle = hours >= 13 ? "P" : "A";
 
         hours = hours % 12;
-        return `${prefix} ${giveZero(hours)}:${giveZero(minutes)}:${giveZero(seconds)} ${cycle}`;
+        return (
+        <span>
+            {prefix}{' '}
+            <span style={{ fontSize: '30px' }}>
+                {giveZero(hours)}:{giveZero(minutes)}:{giveZero(seconds)}
+            </span>{' '}
+            {cycle}
+        </span>
+        )
+        // return `${prefix} ${giveZero(hours)}:${giveZero(minutes)}:${giveZero(seconds)} ${cycle}`;
     }
 
     function giveZero(number : number) {
