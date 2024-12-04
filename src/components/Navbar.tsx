@@ -22,8 +22,8 @@ export default function Navbar() {
             <li className="px-6">
                 <a href=""><SettingsIcon/>Settings</a>
             </li>
-            <li>
-            <a href=""><LogoutIcon fontSize='medium'/>Logout</a>
+            <li className="px-6">
+                <a href=""><LogoutIcon sx={{ fontSize: '26px' }}/>Log out</a> 
             </li>
         </ul>
     )
