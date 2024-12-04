@@ -96,7 +96,7 @@ export default function Calendar() {
                 {[...Array(currentMonth.days).keys()].map((day) => (
                     <div 
                         key={day} 
-                        className={`h-10 w-8 flex justify-center items-center border border-gray-300 rounded-sm 
+                        className={`h-8 w-8 flex justify-center items-center border border-gray-300 rounded-sm text-sm 
                             ${checkCurrentDay(day) ? 'bg-blue-500 text-white hover:bg-blue-400' : 'bg-white hover:bg-gray-200'}`}
                     >
                         {day + 1}
