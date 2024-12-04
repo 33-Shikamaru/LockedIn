@@ -52,7 +52,7 @@ const ToDoList = () => {
     const [editingIndex, setEditingIndex] = useState<number | null>(null); // Sets Default Tab Index
     const [newTabName, setNewTabName] = useState(''); // Sets Default Tab Name
 
-    
+
     // Updates localStorage for tasks on any change
     useEffect(() => {
         // console.log('Tasks changed, saving to localStorage:', tasks); // Logging test to print current tasks
@@ -387,24 +387,10 @@ const ToDoList = () => {
                                 boxShadow: 1,
                             }}
                         > 
-                        {/* TESTING BELOW ONLY */}
-                        {/*                         
-                            {(tabs[activeTab] && tabs[activeTab].length === 0) ? (
-                                <Box
-                                    display="flex"
-                                    justifyContent="center"
-                                    alignItems="center"
-                                    // p={2}
-                                    color='red'
-                                >
-                                     No Tasks To Complete
-                                </Box>
-                            ) : (
-                                renderTasks(tabs[activeTab])
-                            )} 
-                        */}
-                            
-                            {renderTasks(tabs[activeTab])}
+                            {tasks[tabs[activeTab]].length === 0 ? (
+                                <p className="flex justify-center items-center text-gray-400 text-sm"
+                                    style={{ fontFamily: 'Lazydog, sans-serif' }}>No Tasks To Complete... 😭</p> 
+                            ) : renderTasks(tabs[activeTab]) } 
                         </Paper>
                     </Box>
                 </Box>
