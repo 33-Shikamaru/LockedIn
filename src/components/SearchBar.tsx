@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Box, TextField } from '@mui/material'; 
+import { Box, TextField, InputAdornment } from '@mui/material'; 
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function SearchBar({ setActiveTab }: { setActiveTab: (tabIndex: number) => void}) {
 
@@ -90,6 +91,11 @@ export default function SearchBar({ setActiveTab }: { setActiveTab: (tabIndex: n
                         style: {
                             fontFamily: "'Lazydog', sans-serif",
                         },
+                        startAdornment: (
+                            <InputAdornment position="start" sx={{ marginRight: -1 }}>
+                                <SearchIcon />
+                            </InputAdornment>
+                        ),
                     }
                 }}
             /> 
