@@ -17,6 +17,11 @@ body {
     font-family: 'Lazydog';
     font-size: 18px;
     background-color: #FBFDFF;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark {
+    background-color: #4B6D94;
 }
 
 

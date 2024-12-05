@@ -66,25 +66,27 @@ export default function Calendar() {
     }
     
     return (
-        <div className="border border-gray-300 rounded-md p-4 shadow-md bg-blue-50">
+        <div className="border border-gray-300 rounded-md p-4 shadow-md bg-blue-50 dark:bg-[#95BAE6] dark:border-[#4B6D94]">
             <div className="flex justify-between items-center mb-4">
-                <button onClick={prevMonth} className="hover:bg-slate-200 p-2 rounded-full pl-3 pr-3">
+                <button onClick={prevMonth} className="hover:bg-slate-200 p-2 rounded-full pl-3 pr-3 dark:text-[#FBFDFF]">
                     {"<"}
                 </button>
 
                 <div className="text-lg font-bold">
-                    <span className={`${checkCurrentMonth(currentMonth.name) ? "text-blue-400" : ""}`}>{currentMonth.name} {year}</span>
+                    <span className={`${checkCurrentMonth(currentMonth.name) ? "text-blue-400 dark:text-green-200" : "dark:text-[#FBFDFF]"}`}>{currentMonth.name} {year}</span>
                 </div>
 
-                <button onClick={nextMonth} className="hover:bg-slate-200 p-2 rounded-full pl-3 pr-3">
+                <button onClick={nextMonth} className="hover:bg-slate-200 p-2 rounded-full pl-3 pr-3 dark:text-[#FBFDFF]">
                     {">"}
                 </button>
             </div>
+            
             <div className="grid grid-cols-7 gap-2 text-center mb-2">
                 {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day) => (
-                    <div key={day} className="text-gray-600">{day}</div>
+                    <div key={day} className="text-gray-600 dark:text-[#FBFDFF]">{day}</div>
                 ))}
             </div>
+
             <div className="grid grid-cols-7 gap-2">
                 
                 {/* Creates empty buffer days */}
@@ -96,8 +98,8 @@ export default function Calendar() {
                 {[...Array(currentMonth.days).keys()].map((day) => (
                     <div 
                         key={day} 
-                        className={`h-8 w-8 flex justify-center items-center border border-gray-300 rounded-sm text-sm 
-                            ${checkCurrentDay(day) ? 'bg-blue-500 text-white hover:bg-blue-400' : 'bg-white hover:bg-gray-200'}`}
+                        className={`h-8 w-8 flex justify-center items-center border border-gray-300 rounded-sm text-sm dark:text-white dark:bg-slate-600
+                            ${checkCurrentDay(day) ? 'bg-blue-500 text-white hover:bg-blue-400 dark:bg-green-200 dark:text-slate-600 dark:border-green-200' : 'bg-white hover:bg-gray-200'}`}
                     >
                         {day + 1}
                     </div>

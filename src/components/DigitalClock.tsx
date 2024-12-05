@@ -39,7 +39,7 @@ export default function DigitalClock() {
     } 
     return (
         <div className='flex items-center justify-center text-center whitespace-nowrap'>
-            <div className='font-digital text-2xl border-4 bg-[#E9F3FF] border-[#95BAE6] text-[#95BAE6] rounded-xl pt-3 pb-3 pr-2 pl-2'>
+            <div className='font-digital text-2xl border-4 bg-[#E9F3FF] border-[#95BAE6] text-[#95BAE6] rounded-xl pt-3 pb-3 pr-2 pl-2 dark:border-[#345376] dark:text-[#4B6D94]'>
                 <span>{formatTime()}</span>
             </div>
         </div>

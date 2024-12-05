@@ -209,7 +209,7 @@ const ToDoList = () => {
 
     return (
         <div className="flex items-center justify-center">
-            <div className="flex space-x-2 w-1/2 bg-blue-100 rounded-lg px-5 py-5" aria-label="To Do List">
+            <div className="flex space-x-2 w-1/2 bg-blue-100 rounded-lg px-5 py-5 dark:bg-[#95BAE6]" aria-label="To Do List">
                 <Box sx={{ width: '100%', typography: 'body1', p: 2 }}>
 
                     {/* Search Bar */}

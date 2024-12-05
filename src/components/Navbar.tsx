@@ -6,24 +6,24 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function Navbar() {
     return(
-        <ul className="flex items-center justify-center p-5 text-[#8EC2FF]">
+        <ul className="flex items-center justify-center p-5 text-[#8EC2FF] dark:text-[#FBFDFF]">
             <li className="px-6">
-                <a href=""><HomeIcon/>Dashboard</a>
+                <a href=""><HomeIcon className='dark:text-blue-300'/>Dashboard</a>
             </li>
 
             <li className="px-6">
-                <a href=""><CalendarMonthIcon/>Calendar</a>
+                <a href=""><CalendarMonthIcon className='dark:text-blue-300'/>Calendar</a>
             </li>
 
             <li className="px-6">
-                <a href=""><StickyNote2Icon/>Notes</a>
+                <a href=""><StickyNote2Icon className='dark:text-blue-300'/>Notes</a>
             </li>
 
             <li className="px-6">
-                <a href=""><SettingsIcon/>Settings</a>
+                <a href=""><SettingsIcon className='dark:text-blue-300'/>Settings</a>
             </li>
             <li className="px-6">
-                <a href=""><LogoutIcon sx={{ fontSize: '26px' }}/>Log out</a> 
+                <a href=""><LogoutIcon className='dark:text-blue-300' sx={{ fontSize: '26px' }}/>Log out</a> 
             </li>
         </ul>
     )
