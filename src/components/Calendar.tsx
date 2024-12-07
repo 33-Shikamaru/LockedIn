@@ -82,7 +82,7 @@ export default function Calendar() {
             </div>
             
             <div className="grid grid-cols-7 gap-2 text-center mb-2">
-                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day) => (
+                {['Su', 'M', 'T', 'W', 'Th', 'F', 'Sa'].map((day) => (
                     <div key={day} className="text-gray-600 dark:text-[#FBFDFF]">{day}</div>
                 ))}
             </div>
