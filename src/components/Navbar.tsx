@@ -60,6 +60,9 @@ const Navbar = () => {
                 <LogoutIcon className='dark:text-blue-300' sx={{ fontSize: '26px' }}/>
                 <span>Log out</span>
             </li>
+
+            {/* <li className="px-6" onClick={(e) => {e.preventDefault(); if(window.confirm('Are you sure you want to Log Out?')){handleLogOut()};}}>
+                <a href=""><LogoutIcon className='dark:text-blue-300' sx={{ fontSize: '26px' }}/>Log out</a>  */}
         </ul>
     )
 }
