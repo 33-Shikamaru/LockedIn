@@ -10,6 +10,8 @@ import WeatherWidget from './weather/index.tsx'
 const Home = () => {
   const [inputValue, setinputValue] = useState('Irvine');
   const [location, setLocation] = useState('Irvine');
+  const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+  const username = userData.name;
 
   const handleFormSubmit = (e : React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,7 +22,7 @@ const Home = () => {
       <Title />
       <Navbar />
       {/* After we get user info we pass it here or in the DashNote.tsx file */}
-      <DashNote username="Jefferson McLinden"/> 
+      <DashNote username={username}/> 
 
       <div className="flex items-center justify-center m-10">
         <Calendar/>

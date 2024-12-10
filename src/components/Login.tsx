@@ -24,7 +24,7 @@ const Login = () => {
             className="p-2 rounded-lg placeholder-gray-300 outline-none mb-2"/>
 
             <label htmlFor="password" className="text-xl">Password</label>
-            <input type="text" id="password" placeholder="Enter your password"
+            <input type="password" id="password" placeholder="Enter your password"
             className="p-2 rounded-lg placeholder-gray-300 outline-none mb-4"/>
 
             <button type="submit" 
