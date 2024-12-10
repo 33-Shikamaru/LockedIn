@@ -4,11 +4,6 @@ type NameProp = {
     username : string;
 };
 
-{/* Sample function for displaying username */}
-// function getUserInfo() {
-
-// }
-
 export default function DashNote({ username } :NameProp) {
     return(
         <div className="flex items-center justify-center">
