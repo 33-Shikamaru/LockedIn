@@ -51,8 +51,10 @@ export default function SearchBar({ setActiveTab }: { setActiveTab: (tabIndex: n
     }, [tasks]);
 
     const openTab = (taskId: number) => {
-        const tabName = Object.keys(tasks).find((tab) =>
-            tasks[tab].some((task) => task.id === taskId)
+        const storedTasks = JSON.parse(localStorage.getItem('tasks') || '{}');
+        
+        const tabName = Object.keys(storedTasks).find((tab) =>
+            storedTasks[tab].some((task:any) => task.id === taskId)
         );
 
         if (tabName) {
