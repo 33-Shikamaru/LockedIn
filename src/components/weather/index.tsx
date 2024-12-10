@@ -33,11 +33,12 @@ interface WeatherData {
 const WeatherWidget = ({ location }: { location: string }) => {
 
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+  const apiKey = import.meta.env.VITE_WEATHER_API_KEY_URL;
 
   useEffect(()=> {
     if(location.length){
       axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid={API-KEY-HERE}`
+        `${apiKey}`
       )
       .then(response=>{
         setWeatherData(response.data)
