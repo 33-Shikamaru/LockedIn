@@ -82,7 +82,7 @@ export default function Calendar() {
             </div>
             
             <div className="grid grid-cols-7 gap-2 text-center mb-2">
-                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day) => (
+                {['Su', 'M', 'T', 'W', 'Th', 'F', 'Sa'].map((day) => (
                     <div key={day} className="text-gray-600 dark:text-[#FBFDFF]">{day}</div>
                 ))}
             </div>
@@ -98,8 +98,8 @@ export default function Calendar() {
                 {[...Array(currentMonth.days).keys()].map((day) => (
                     <div 
                         key={day} 
-                        className={`h-8 w-8 flex justify-center items-center border border-gray-300 rounded-sm text-sm dark:text-white dark:bg-slate-600
-                            ${checkCurrentDay(day) ? 'bg-blue-500 text-white hover:bg-blue-400 dark:bg-green-200 dark:text-slate-600 dark:border-green-200' : 'bg-white hover:bg-gray-200'}`}
+                        className={`h-8 w-8 flex justify-center items-center border border-gray-300 rounded-sm text-sm
+                            ${checkCurrentDay(day) ? 'bg-blue-500 text-white hover:bg-blue-400 dark:bg-green-200 dark:text-slate-600 dark:border-green-200 hover:dark:bg-green-300' : 'bg-white hover:bg-gray-200 dark:text-white dark:bg-slate-600 hover:dark:bg-slate-400'}`}
                     >
                         {day + 1}
                     </div>

@@ -28,11 +28,11 @@ const ToDoList = () => {
         if (savedTabs) {
             return JSON.parse(savedTabs);
         }
-        return {
-            General: [],
-            Work: [],
-            Personal: [],
-        }
+        return [
+            'General',
+            'Work',
+            'Personal',
+        ]
     });
 
     const [activeTab, setActiveTab] = useState(0); // Sets Default Active Tab State
@@ -73,9 +73,20 @@ const ToDoList = () => {
     };
 
     const saveTabName = () => {
-        if (editingIndex === null) return;
-        const updatedTabs = [...tabs]; // Copy current tabs to updatedTabs
-        updatedTabs[editingIndex] = newTabName; // Adds new tab name to current editing tab (AKA active tab) 
+        if (editingIndex === null || newTabName.trim() === '') return;
+        const trimmedInput = newTabName.trim()
+        const oldTabName = tabs[editingIndex];
+        const updatedTabs = tabs.map((tab, index) => // Adds new tab name to current editing tab (AKA active tab) 
+            index === editingIndex ? trimmedInput : tab
+        );
+
+        setTasks(prevTasks => {
+            const updatedTasks = {...prevTasks};
+            updatedTasks[trimmedInput] = updatedTasks[oldTabName];
+            delete updatedTasks[oldTabName];
+            return updatedTasks;
+        });
+
         setTabs(updatedTabs); // Update tabs
         setEditingIndex(null);
     };
@@ -84,11 +95,6 @@ const ToDoList = () => {
         if (event.key === 'Enter') {
             saveTabName();
         }
-    };
-
-    const handleDoubleClick = (index: number) => {
-        setEditingIndex(index);
-        setNewTabName(tabs[index]);
     };
 
     const addNewTask = () => {
@@ -120,7 +126,7 @@ const ToDoList = () => {
             localStorage.setItem('tasks', JSON.stringify(updatedTasks));
             return updatedTasks   
         });
-            setActiveTab(tabs.length); // Make newly created tab the active one
+        setActiveTab(tabs.length); // Makes newly created tab the active one
     };
 
     const closeTab = (index: number) => {
@@ -161,51 +167,54 @@ const ToDoList = () => {
         }));
     }
 
-    const renderTasks = (tab: string) => (
-        <List>
-            {(tasks[tab] || []).map((task) => (
-                <ListItem
-                    key={task.id}
-                    sx={{
-                        // backgroundColor: '#f9f9f9',
-                        backgroundColor: task.completed ? '#ebffef' : '#f9f9f9',
-                        borderRadius: 2,
-                        mb: 1,
-                        boxShadow: 1,
-                        display: 'flex',
-                        alignItems: 'center',
-                        width: '100%',
-                        maxWidth: '100%',
-                        wordWrap: 'break-word',
-                    }}
-                >
-                    <Checkbox
-                        checked={task.completed}
-                        onChange={() => updateCheckbox(tab, task.id)}
-                    />
-                    <ListItemText
-                        primary={task.text}
-                        primaryTypographyProps={{
-                            fontSize: '1rem',
-                            fontWeight: 500,
-                            sx:{
-                                color: task.completed ? 'lightgray' : 'inherit',
-                                textDecoration: task.completed ? 'line-through' : 'none',
-                            }
-                        }}
-                    />
-                    <IconButton
-                        onClick={() => deleteTask(tab, task.id)}
+    const renderTasks = (tab: string) => {
+        const tabTasks = tasks[tab] || []; 
+        return (
+            <List>
+                {(tabTasks).map((task) => (
+                    <ListItem
+                        key={task.id}
                         sx={{
-                            '&:hover': { color: 'white', bgcolor: '#FF7E7E', borderRadius: '0.5rem', },
+                            // backgroundColor: '#f9f9f9',
+                            backgroundColor: task.completed ? '#ebffef' : '#f9f9f9',
+                            borderRadius: 2,
+                            mb: 1,
+                            boxShadow: 1,
+                            display: 'flex',
+                            alignItems: 'center',
+                            width: '100%',
+                            maxWidth: '100%',
+                            wordWrap: 'break-word',
                         }}
                     >
-                       <DeleteIcon></DeleteIcon>
-                    </IconButton>
-                </ListItem>
-            ))}
-        </List>
-    );
+                        <Checkbox
+                            checked={task.completed}
+                            onChange={() => updateCheckbox(tab, task.id)}
+                        />
+                        <ListItemText
+                            primary={task.text}
+                            primaryTypographyProps={{
+                                fontSize: '1rem',
+                                fontWeight: 500,
+                                sx:{
+                                    color: task.completed ? 'lightgray' : 'inherit',
+                                    textDecoration: task.completed ? 'line-through' : 'none',
+                                }
+                            }}
+                        />
+                        <IconButton
+                            onClick={() => deleteTask(tab, task.id)}
+                            sx={{
+                                '&:hover': { color: 'white', bgcolor: '#FF7E7E', borderRadius: '0.5rem', },
+                            }}
+                        >
+                        <DeleteIcon></DeleteIcon>
+                        </IconButton>
+                    </ListItem>
+                ))}
+            </List>
+        )
+    };
 
     return (
         <div className="flex items-center justify-center">
@@ -282,27 +291,17 @@ const ToDoList = () => {
                                             }}
                                         />
                                     ) : (
-                                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <div className='flex items-center text-[16px]'>
                                             <span onDoubleClick={() => setEditingIndex(index)}>{tab}</span>
-                                            <IconButton
+                                            <div 
                                                 onClick={() => closeTab(index)}
-                                                sx={{
-                                                    ml: 2,
-                                                    mr: -1,
-                                                    color: '#555',
-                                                    maxHeight: 1,
-                                                    maxWidth: 1,
-                                                    padding: 0.5,
-                                                    '&:hover': { color: 'white', bgcolor: '#FF7E7E' },
-                                                    fontSize: "16px",
-                                                }}
+                                                className="flex items-center ml-2 -mr-1 p-1  text-[#555] hover:bg-[#FF7E7E] hover:text-white rounded-3xl"
                                             >
-                                                <ClearIcon fontSize="inherit" />
-                                            </IconButton>
-                                        </Box>
+                                                <ClearIcon fontSize='inherit' />
+                                            </div>
+                                        </div>
                                     )
                                 }
-                                onDoubleClick={() => handleDoubleClick(index)}
                             />
                         ))}
                         <Tab
