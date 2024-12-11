@@ -2,7 +2,6 @@ import Navbar from './Navbar.tsx'
 import Title from './Title.tsx'
 import {useState} from 'react'
 import EditIcon from '@mui/icons-material/Edit';
-import Tooltip from '@mui/material/Tooltip';
 
 const Settings = () => {
     const [data, updateData] = useState(() => {
@@ -54,6 +53,9 @@ const Settings = () => {
     <Title />
     <Navbar />
     <div className='flex flex-col items-center justify-center p-6 gap-3'>
+        <div className='flex flex-row items-center justify-between w-1/2 p-3 bg-blue-100 border rounded shadow-md dark:bg-[] dark:text-white dark:bg-[#95BAE6] dark:border-[#345376]'>
+            <label className='pl-2'>Name: <span className='ml-5'>{data.name}</span></label> 
+        </div>
         <div className='flex flex-row items-center justify-between w-1/2 p-3 bg-blue-100 border rounded shadow-md dark:bg-[] dark:text-white dark:bg-[#95BAE6] dark:border-[#345376]'>
         <label className='pl-2'>Username: {isEditingUsername ? (
         <input
