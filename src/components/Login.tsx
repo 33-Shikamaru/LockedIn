@@ -5,13 +5,30 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate('/home'); 
+      verifyUser(e);
+      e.preventDefault();
+      // navigate('/home'); 
   };
 
   const redirectToSignup = () => {
     navigate('/signup');
   };
+
+const verifyUser = (e: any) => {
+    e.preventDefault();
+
+    const storedUserData = JSON.parse(localStorage.getItem('userData') || '');
+    const usernameInput = document.getElementById('username') as HTMLInputElement;
+    const passwordInput = document.getElementById('password') as HTMLInputElement;
+    const username = usernameInput.value.toString();
+    const password = passwordInput.value.toString();
+
+    if (username === storedUserData.username &&password === storedUserData.password) {
+        navigate('/home');
+    } else {
+        console.log("NO USER FOUND, PLEASE CREATE AN ACCOUNT") // add red errors styling to the inputs?
+    }
+};
 
   return (
     <div className="flex items-center justify-center h-screen bg-blue-50">

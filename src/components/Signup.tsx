@@ -10,11 +10,13 @@ interface UserData {
 const Signup = () => {
   const navigate = useNavigate();
 
-  const [userData, setUserData] = useState<UserData>({
+  const initialUserData: UserData = {
     name: '',
     username: '',
     password: ''
-  });
+  };
+
+  const [userData, setUserData] = useState(initialUserData);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -31,7 +33,7 @@ const Signup = () => {
   };
 
   const redirectToLogin = () => {
-    navigate('/');
+      navigate('/');
   };
 
     return (
@@ -45,7 +47,7 @@ const Signup = () => {
             type="text" 
             id="name" 
             placeholder="Peter Anteater"
-            value={userData.name}
+            // value={userData.name}
             onChange={handleInputChange}
             className="p-2 rounded-lg placeholder-gray-300 outline-none mb-2"
           />
@@ -55,7 +57,7 @@ const Signup = () => {
             type="text" 
             id="username" 
             placeholder="Enter a username"
-            value={userData.username}
+            // value={userData.username}
             onChange={handleInputChange}
             className="p-2 rounded-lg placeholder-gray-300 outline-none mb-2"
           />
@@ -65,7 +67,7 @@ const Signup = () => {
             type="password" 
             id="password" 
             placeholder="Enter a password"
-            value={userData.password}
+            // value={userData.password}
             onChange={handleInputChange}
             className="p-2 rounded-lg placeholder-gray-300 outline-none mb-4"
           />
@@ -92,4 +94,3 @@ const Signup = () => {
   }
   
 export default Signup
-  
