@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 const Login = () => {
 
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = (e: any) => {
       verifyUser(e);
       e.preventDefault();
       // navigate('/home'); 
@@ -14,21 +15,40 @@ const Login = () => {
     navigate('/signup');
   };
 
-const verifyUser = (e: any) => {
+  const verifyUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const storedUserData = JSON.parse(localStorage.getItem('userData') || '');
+    const storedUserDataString = localStorage.getItem('userData');
+    
+    if (!storedUserDataString) {
+        setLoginError({
+            noUser: true,
+            message: "No user found. Please create an account."
+        });
+        return;
+    }
+
+    const storedUserData = JSON.parse(storedUserDataString);
     const usernameInput = document.getElementById('username') as HTMLInputElement;
     const passwordInput = document.getElementById('password') as HTMLInputElement;
-    const username = usernameInput.value.toString();
-    const password = passwordInput.value.toString();
+    
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
 
-    if (username === storedUserData.username &&password === storedUserData.password) {
+    if (username === storedUserData.username && password === storedUserData.password) {
         navigate('/home');
     } else {
-        console.log("NO USER FOUND, PLEASE CREATE AN ACCOUNT") // add red errors styling to the inputs?
+        setLoginError({
+            noUser: true,
+            message: "Incorrect username or password. Please try again."
+        });
     }
-};
+  };
+
+    const [loginError, setLoginError] = useState({
+        noUser: false,
+        message: ''
+    });
 
   return (
     <div className="flex items-center justify-center h-screen bg-blue-50">
@@ -43,6 +63,12 @@ const verifyUser = (e: any) => {
             <label htmlFor="password" className="text-xl">Password</label>
             <input type="password" id="password" placeholder="Enter your password"
             className="p-2 rounded-lg placeholder-gray-300 outline-none mb-4"/>
+
+            {loginError.noUser && (
+                <div className="text-center mb-2 text-red-500 text-xs w-full">
+                    {loginError.message}
+                </div>
+            )}
 
             <button type="submit" 
             className="bg-blue-300 py-2 rounded-lg text-xl hover:bg-blue-400 mb-2"
