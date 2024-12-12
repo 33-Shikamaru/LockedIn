@@ -30,8 +30,7 @@ Our group has created a Personalized Digital Assistant Web Application aiming to
 4. If page hasn't loaded in your preferred browser, click on the provided `localhost:port` link displayed in the Terminal.
 
 # Images
-<img width="770" alt="image" src=""><br>
+<img width="1000" alt="image1" src="https://github.com/user-attachments/assets/ae52d03c-1324-4e73-9825-e1c1b21a24f7" />
+<img width="600" alt="image3" src="https://github.com/user-attachments/assets/02c40bca-4d84-48a6-9182-748a121f8c63" />
+<img width="700" alt="image2" src="https://github.com/user-attachments/assets/e213a903-b22c-4f20-a3de-577134e8be10" />
 
-<img width="770" alt="image" src=""><br>
-
-<img width="770" alt="image" src="">
